@@ -11,14 +11,14 @@
     },
     "HostedZone" : {
       "Type" : "String",
-      "Default" : "cloudydemo.com",
+      "Default" : "cisco-cloudy.com",
       "Description" : "Your Route53 Zone"
     }
   },
 
   "Mappings" : {
     "RegionMap" : {
-      "us-east-1"      : { "AMI" : "ami-54fc6d3d" }
+      "us-east-1"      : { "AMI" : "ami-481d8d21" }
     }
   },
 
@@ -47,20 +47,18 @@
     },
 
 
-
-
     "NamedInstance" : {
       "Type" : "AWS::EC2::Instance",
       "Properties" : {
         "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "AMI" ]},
         "InstanceType" : "m1.small",
-        "KeyName" : "libra",
+        "KeyName" : "open_shift_cisco",
         "SecurityGroups" : [ {"Ref" : "StandardSecurityGroup"} ],
         "Tags" : [{"Key" : "Name", "Value" : { "Fn::Join" : ["-",["openshift", {"Ref":"Prefix"}, "named"]]}}],
         "UserData" : { "Fn::Base64" : { "Fn::Join" : ["",[
             "#!/bin/bash -x","\n",
             "cd ~/","\n",
-            "wget --no-check-certificate https://raw.github.com/openshift/openshift-extras/master/aws-cloudformation/ose-1.1-amz.sh","\n",
+            "wget --no-check-certificate https://raw.github.com/pbraswell/openshift-extras/master/aws-cloudformation/ose-1.1-amz.sh","\n",
             "export CONF_PREFIX='", { "Ref" : "Prefix" } , "'\n",
             "export CONF_INSTALL_COMPONENTS='named'","\n",
             "sh ose-1.1-amz.sh 'ID_NAMED' '", {"Ref" : "NamedWaitForInstanceWaitHandle"} ,"'", "\n"]]}}
@@ -115,13 +113,13 @@
       "Properties" : {
         "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "AMI" ]},
         "InstanceType" : "m1.large",
-        "KeyName" : "libra",
+        "KeyName" : "open_shift_cisco",
         "SecurityGroups" : [ {"Ref" : "StandardSecurityGroup"} ],
         "Tags" : [{"Key" : "Name", "Value" : { "Fn::Join" : ["-",["openshift", {"Ref":"Prefix"}, "mongo"]]}}],
         "UserData" : { "Fn::Base64" : { "Fn::Join" : ["",[
             "#!/bin/bash -x","\n",
             "cd ~/","\n",
-            "wget --no-check-certificate https://raw.github.com/openshift/openshift-extras/master/aws-cloudformation/ose-1.1-amz.sh","\n",
+            "wget --no-check-certificate https://raw.github.com/pbraswell/openshift-extras/master/aws-cloudformation/ose-1.1-amz.sh","\n",
             "export CONF_PREFIX='", { "Ref" : "Prefix" } , "'\n",
             "export CONF_INSTALL_COMPONENTS='datastore'","\n",
             "sh ose-1.1-amz.sh 'ID_MONGO' '", {"Ref" : "MongoWaitForInstanceWaitHandle"} ,"'", "\n"]]}}
@@ -164,13 +162,13 @@
       "Properties" : {
         "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "AMI" ]},
         "InstanceType" : "m1.large",
-        "KeyName" : "libra",
+        "KeyName" : "open_shift_cisco",
         "SecurityGroups" : [ {"Ref" : "StandardSecurityGroup"} ],
         "Tags" : [{"Key" : "Name", "Value" : { "Fn::Join" : ["-",["openshift", {"Ref":"Prefix"}, "activemq"]]}}],
         "UserData" : { "Fn::Base64" : { "Fn::Join" : ["",[
             "#!/bin/bash -x","\n",
             "cd ~/","\n",
-            "wget --no-check-certificate https://raw.github.com/openshift/openshift-extras/master/aws-cloudformation/ose-1.1-amz.sh","\n",
+            "wget --no-check-certificate https://raw.github.com/pbraswell/openshift-extras/master/aws-cloudformation/ose-1.1-amz.sh","\n",
             "export CONF_PREFIX='", { "Ref" : "Prefix" } , "'\n",
             "export CONF_INSTALL_COMPONENTS='activemq'","\n",
             "sh ose-1.1-amz.sh 'ID_ACTIVEMQ' '", {"Ref" : "ActiveMQWaitForInstanceWaitHandle"} ,"'", "\n"]]}}
@@ -211,13 +209,13 @@
       "Properties" : {
         "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "AMI" ]},
         "InstanceType" : "m1.large",
-        "KeyName" : "libra",
+        "KeyName" : "open_shift_cisco",
         "SecurityGroups" : [ {"Ref" : "StandardSecurityGroup"} ],
         "Tags" : [{"Key" : "Name", "Value" : { "Fn::Join" : ["-",["openshift", {"Ref":"Prefix"}, "broker"]]}}],
         "UserData" : { "Fn::Base64" : { "Fn::Join" : ["",[
             "#!/bin/bash -x","\n",
             "cd ~/","\n",
-            "wget --no-check-certificate https://raw.github.com/openshift/openshift-extras/master/aws-cloudformation/ose-1.1-amz.sh","\n",
+            "wget --no-check-certificate https://raw.github.com/pbraswell/openshift-extras/master/aws-cloudformation/ose-1.1-amz.sh","\n",
             "export CONF_PREFIX='", { "Ref" : "Prefix" } , "'\n",
             "export CONF_NAMED_IP_ADDR='", {"Fn::GetAtt" : [ "NamedInstance", "PublicIp" ]}, "'\n",
             "export CONF_INSTALL_COMPONENTS='broker'","\n",
@@ -261,13 +259,13 @@
       "Properties" : {
         "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "AMI" ]},
         "InstanceType" : "m1.large",
-        "KeyName" : "libra",
+        "KeyName" : "open_shift_cisco",
         "SecurityGroups" : [ {"Ref" : "StandardSecurityGroup"} ],
         "Tags" : [{"Key" : "Name", "Value" : { "Fn::Join" : ["-",["openshift", {"Ref":"Prefix"}, "node"]]}}],
         "UserData" : { "Fn::Base64" : { "Fn::Join" : ["",[
             "#!/bin/bash -x","\n",
             "cd ~/","\n",
-            "wget --no-check-certificate https://raw.github.com/openshift/openshift-extras/master/aws-cloudformation/ose-1.1-amz.sh","\n",
+            "wget --no-check-certificate https://raw.github.com/pbraswell/openshift-extras/master/aws-cloudformation/ose-1.1-amz.sh","\n",
             "export CONF_PREFIX='", { "Ref" : "Prefix" } , "'\n",
             "export CONF_INSTALL_COMPONENTS='node'","\n",
             "sh ose-1.1-amz.sh 'ID_BROKER' '", {"Ref" : "NodeWaitForInstanceWaitHandle"} ,"'", "\n"]]}}
